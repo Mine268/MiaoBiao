@@ -2,33 +2,52 @@
 
 ## `core.v`
 
-The core of this stopwatch, undertaking the function of counting.
+秒表的核心，实现计时、暂停、清零的任务。
 
 ### inputs
 
 - `clk : wire`
 
-  Syn-clock input.
+  同步时钟时入，注意分频。
 
 - `rstn : wire`
 
-  Reset signal interface. Initial the stopwatch at 0:00:00 with status of `pause`.
+  时间清零，状态转换为暂停状态。
 
 - `start : wire`
 
-  Start the stopwatch, the count would increase along with time.
+  开始计时，直到溢出。
 
 - `pause : wire`
 
-  Stop the count.
+  暂停计时。
 
 - `reset : wire`
 
-  Clear the time to 0:00:00 and stop the watch.
+  时间清零，状态转换为暂停状态。
 
 ### outputs
 
 - `current : reg[15:0]`
 
-  Store the current time with the unit of 10ms from `0x0000` to `0x2EDF`, and `0xFFFF` stands for overflow error. At `error` status, the stopwatch would switch to `stop` status with `current` equals to `0x0000` for any inputs.
+  表示当前时间，1时间单位表示10毫秒，最大时间为`0x2EDF`，到达最大时间后转换为`0xFFFF`表示溢出。
 
+## `freq_div.v`
+
+分频器。
+
+### inputs
+
+- `clk : wire`
+
+  同步时钟信号。
+
+- `rst : wire`
+
+  分频器清零。
+
+### outputs
+
+- `enable : reg`
+
+  分频后的输出信号。
