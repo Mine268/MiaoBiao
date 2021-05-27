@@ -49,6 +49,16 @@ module testbench();
         start = 1;
         #20
         start = 0;
+
+        #120230
+        reset = 1;
+        #10
+        reset = 0;
+
+        #30
+        start = 1;
+        #10
+        start = 0;
     end
 
     core core1(
