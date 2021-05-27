@@ -2,71 +2,49 @@
 
 module testbench();
 
-    reg clock;
-    reg rstn;
+    reg clk;
+    reg rst;
     reg start;
     reg reset;
     reg pause;
-    wire[15:0] current;
 
-    always #5 clock = ~clock;
+    wire clr_signal;
+    wire add_signal;
+
+    wire [7:0] ms;
+    wire [7:0] sec;
+    wire [7:0] min;
+
+    wire legal;
+
+    time_accumulator ta(clk, rst, clr_signal, add_signal, ms, sec, min);
+    state_converter sc(clk, rst, ms, sec, min, start, pause, reset, clr_signal, add_signal);
+
+    always #5 clk = ~clk;
 
     initial begin
-        clock = 0;
-        rstn = 1;
         start = 0;
+        pause = 0;
         reset = 0;
-        pause = 0;
-
-        #10
-        rstn = 0;
-        start = 1;
-
-        #10
-        start = 0;
-
-        #30
-        pause = 1;
-        #10
-        pause = 0;
-
-        #30
-        start = 1;
-        #10
-        start = 0;
-
-        #30
-        pause = 1;
-        #10
-        pause = 0;
-
-        #30
-        reset = 1;
-        #10
-        reset = 0;
-
-        #30
-        start = 1;
+        rst = 1;
+        clk = 0;
         #20
+        rst = 0;
+        
+        #10
+        start = 1;
+        #10
         start = 0;
 
-        #120230
+        #121305
         reset = 1;
         #10
         reset = 0;
 
-        #30
+        #20
         start = 1;
         #10
         start = 0;
     end
-
-    core core1(
-        .clk(clock),
-        .rstn(rstn),
-        .start(start),
-        .pause(pause),
-        .reset(reset),
-        .current(current));
 
 endmodule
