@@ -1,4 +1,5 @@
 /*
 !.gitignore
-!/miaomiaomiao.srcs
+!/miaomiaomiao.srcs/*
+!/miaomiaomiao.sim/*
 !readme.md
