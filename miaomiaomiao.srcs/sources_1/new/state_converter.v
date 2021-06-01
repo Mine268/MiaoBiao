@@ -13,9 +13,9 @@ module state_converter(
     input reset,
 
     output reg clr_signal,
-    output reg add_signal
+    output reg add_signal,
     
-    reg [1:0] State;
+    reg [1:0] State
     );
 
     parameter ACTIVE = 2'b00;
